@@ -47,80 +47,81 @@ const Counters = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-indigo-100">
-      {/* Navbar */}
+      {/* Navbar - Padding kam ki */}
       <nav className="bg-white/80 backdrop-blur-xl shadow-lg sticky top-0 z-40">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link to="/dashboard" className="flex items-center gap-3 text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            <Users size={32} />
+        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+          <Link to="/dashboard" className="flex items-center gap-2 text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            <Users size={24} />
             Queue Management
           </Link>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             <Link 
               to="/dashboard" 
-              className="px-6 py-2 bg-gradient-to-r from-emerald-500 to-green-600 text-white font-semibold rounded-xl hover:from-emerald-600 hover:to-green-700 transition-all shadow-lg hover:shadow-xl"
+              className="px-4 py-2 text-sm bg-gradient-to-r from-emerald-500 to-green-600 text-white font-semibold rounded-xl hover:from-emerald-600 hover:to-green-700 transition-all shadow-lg"
             >
               Generate Token
             </Link>
             <button
               onClick={logout}
-              className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl"
+              className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 text-sm rounded-xl font-semibold transition-all shadow-lg"
             >
-              <LogOut size={20} />
+              <LogOut size={18} />
               Logout
             </button>
           </div>
         </div>
       </nav>
 
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="text-center mb-16">
-          <ArrowLeft className="mx-auto h-12 w-12 text-gray-400 mb-6 cursor-pointer hover:text-gray-600 transition-colors" onClick={() => navigate('/dashboard')} />
-          <h1 className="text-5xl font-black bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent mb-6">
+      {/* Main Content - Padding kam ki */}
+      <div className="max-w-7xl mx-auto px-4 py-6">
+        {/* Header Section - Margin kam ki */}
+        <div className="text-center mb-8">
+          <ArrowLeft className="mx-auto h-8 w-8 text-gray-400 mb-3 cursor-pointer hover:text-gray-600 transition-colors" onClick={() => navigate('/dashboard')} />
+          <h1 className="text-3xl font-black bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent mb-2">
             Live Counters Status
           </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Check which counter is currently serving which number. Your turn is next!
+          <p className="text-base text-gray-600 max-w-2xl mx-auto">
+            Check which counter is currently serving which number.
           </p>
         </div>
 
-        {/* Counters Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {/* Counters Grid - Gap kam ki */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {counters.map((counter) => {
             const Icon = counter.icon;
             return (
               <div 
                 key={counter.id}
-                className="group bg-white/70 backdrop-blur-xl rounded-3xl p-8 shadow-2xl hover:shadow-3xl transition-all duration-500 hover:-translate-y-2 border border-white/50 hover:border-blue-200"
+                className="group bg-white/70 backdrop-blur-xl rounded-2xl p-4 shadow-xl hover:shadow-2xl transition-all duration-500 border border-white/50 hover:border-blue-200"
               >
                 {/* Header */}
-                <div className="flex items-center justify-between mb-6">
-                  <div className={`p-3 rounded-2xl bg-gradient-to-r ${counter.color} shadow-lg`}>
-                    <Icon className="h-8 w-8 text-white" />
+                <div className="flex items-center justify-between mb-4">
+                  <div className={`p-2 rounded-xl bg-gradient-to-r ${counter.color} shadow-lg`}>
+                    <Icon className="h-6 w-6 text-white" />
                   </div>
-                  <div className="text-3xl font-bold bg-gradient-to-r from-gray-800 to-gray-900 bg-clip-text text-transparent">
+                  <div className="text-lg font-bold bg-gradient-to-r from-gray-800 to-gray-900 bg-clip-text text-transparent">
                     {counter.name}
                   </div>
                 </div>
 
-                {/* Purpose */}
-                <div className="mb-8">
-                  <p className="text-sm font-semibold text-gray-600 uppercase tracking-wider mb-2">Purpose</p>
-                  <p className="text-xl font-bold text-gray-900">{counter.purpose}</p>
+                {/* Purpose - Size kam ki */}
+                <div className="mb-4">
+                  <p className="text-xs font-semibold text-gray-600 uppercase tracking-wider mb-1">Purpose</p>
+                  <p className="text-base font-bold text-gray-900">{counter.purpose}</p>
                 </div>
 
-                {/* Current Number - Large & Prominent */}
-                <div className="text-center py-8">
-                  <div className="inline-flex items-center gap-3 mb-4 px-8 py-4 bg-gradient-to-r from-yellow-100 to-orange-100 rounded-2xl border-4 border-yellow-200 shadow-xl">
-                    <div className="text-5xl font-black bg-gradient-to-r from-yellow-500 to-orange-500 bg-clip-text text-transparent tracking-widest">
+                {/* Current Number - Size kam ki */}
+                <div className="text-center py-3">
+                  <div className="inline-flex items-center gap-2 mb-2 px-4 py-2 bg-gradient-to-r from-yellow-100 to-orange-100 rounded-xl border-2 border-yellow-200 shadow-lg">
+                    <div className="text-2xl font-black bg-gradient-to-r from-yellow-500 to-orange-500 bg-clip-text text-transparent tracking-widest">
                       {counter.currentNumber}
                     </div>
                   </div>
-                  <p className="text-lg font-semibold text-gray-700 uppercase tracking-wide">Currently Serving</p>
+                  <p className="text-xs font-semibold text-gray-700 uppercase tracking-wide">Currently Serving</p>
                 </div>
 
-                {/* Status Badge */}
-                <div className={`text-center p-3 rounded-xl font-bold text-sm uppercase tracking-wide shadow-md ${
+                {/* Status Badge - Size kam ki */}
+                <div className={`text-center p-2 rounded-lg font-bold text-xs uppercase tracking-wide shadow-md ${
                   Math.random() > 0.5 
                     ? 'bg-emerald-100 text-emerald-800 border border-emerald-200' 
                     : 'bg-blue-100 text-blue-800 border border-blue-200'

@@ -65,53 +65,59 @@ const TokenForm = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-blue-50 p-6">
+      {/* Main container padding kam ki */}
+      <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-blue-50 p-4">
         <div className="max-w-2xl mx-auto">
-          {/* Header */}
-          <nav className="bg-white/80 backdrop-blur-xl shadow-lg rounded-2xl p-6 mb-8">
+          {/* Header - Padding aur margin kam kiya */}
+          <nav className="bg-white/80 backdrop-blur-xl shadow-lg rounded-xl p-4 mb-4">
             <div className="flex items-center justify-between">
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              {/* Title size kam kiya */}
+              <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                 Generate Token
               </h1>
-              <div className="flex items-center gap-4">
-                <Link to="/counters" className="px-6 py-3 bg-gradient-to-r from-indigo-500 to-blue-600 text-white font-semibold rounded-xl hover:from-indigo-600 hover:to-blue-700 transition-all shadow-lg hover:shadow-xl">
+              <div className="flex items-center gap-3">
+                {/* Button size kam kiya */}
+                <Link to="/counters" className="px-4 py-2 text-sm bg-gradient-to-r from-indigo-500 to-blue-600 text-white font-semibold rounded-xl hover:from-indigo-600 hover:to-blue-700 transition-all shadow-lg hover:shadow-xl">
                   Counters Status
                 </Link>
                 <button
                   onClick={logout}
-                  className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl"
+                  className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 text-sm rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl"
                 >
-                  <LogOut size={20} />
+                  <LogOut size={18} />
                   Logout
                 </button>
               </div>
             </div>
           </nav>
 
-          {/* Token Form */}
-          <div className="bg-white/70 backdrop-blur-xl rounded-3xl shadow-2xl p-8 mb-8">
-            <div className="text-center mb-8">
-              <Ticket className="mx-auto h-16 w-16 text-green-500 mb-4" />
-              <h2 className="text-3xl font-bold text-gray-900">Generate Queue Token</h2>
+          {/* Token Form - Padding kam kiya */}
+          <div className="bg-white/70 backdrop-blur-xl rounded-2xl shadow-2xl p-6">
+            <div className="text-center mb-5">
+              {/* Icon size kam kiya */}
+              <Ticket className="mx-auto h-12 w-12 text-green-500 mb-2" />
+              {/* Title size kam kiya */}
+              <h2 className="text-2xl font-bold text-gray-900">Generate Queue Token</h2>
             </div>
 
             {error && (
-              <div className="p-4 bg-red-100 border border-red-400 text-red-700 rounded-2xl mb-6 flex items-center gap-3">
-                <AlertCircle size={20} />
+              <div className="p-3 bg-red-100 border border-red-400 text-red-700 rounded-xl mb-4 flex items-center gap-3 text-sm">
+                <AlertCircle size={18} />
                 {error}
               </div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-3">Phone Number</label>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Phone Number</label>
                 <div className="relative">
                   <Phone className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
                   <input
                     type="tel"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full pl-12 pr-4 py-4 border border-gray-200 rounded-2xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 bg-white/50 shadow-lg"
+                    // Input padding kam ki
+                    className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 bg-white/50 shadow-lg text-sm"
                     placeholder="Enter your phone number"
                     required
                   />
@@ -119,11 +125,12 @@ const TokenForm = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-3">Purpose</label>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Purpose</label>
                 <select
                   value={formData.purpose}
                   onChange={(e) => setFormData({ ...formData, purpose: e.target.value })}
-                  className="w-full px-4 py-4 border border-gray-200 rounded-2xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 bg-white/50 shadow-lg"
+                  // Select padding kam ki
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 bg-white/50 shadow-lg text-sm"
                   required
                 >
                   <option value="">Select purpose</option>
@@ -134,13 +141,13 @@ const TokenForm = () => {
                 </select>
               </div>
 
-              <div className="flex items-center p-4 border border-dashed border-gray-300 rounded-2xl bg-gray-50">
+              <div className="flex items-center p-3 border border-dashed border-gray-300 rounded-xl bg-gray-50">
                 <input
                   type="checkbox"
                   id="urgent"
                   checked={formData.urgent}
                   onChange={(e) => setFormData({ ...formData, urgent: e.target.checked })}
-                  className="w-5 h-5 text-red-500 rounded focus:ring-red-500"
+                  className="w-4 h-4 text-red-500 rounded focus:ring-red-500"
                 />
                 <label htmlFor="urgent" className="ml-3 block text-sm font-semibold text-gray-900 cursor-pointer">
                   Urgent Request <AlertCircle className="inline h-4 w-4 text-red-500 ml-1" />
@@ -150,7 +157,8 @@ const TokenForm = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 disabled:opacity-50 text-white font-bold py-4 px-8 rounded-2xl transition-all duration-200 shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
+                // Button padding kam ki
+                className="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 disabled:opacity-50 text-white font-bold py-3 px-8 rounded-xl transition-all duration-200 shadow-xl hover:shadow-2xl transform hover:-translate-y-1 text-sm"
               >
                 {loading ? 'Generating...' : 'Generate Token'}
               </button>
