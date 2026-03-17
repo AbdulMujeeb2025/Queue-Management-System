@@ -32,49 +32,53 @@ const TokenModal = ({ tokenData, onClose, onPrint }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-3xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
-        {/* Header */}
-        <div className="p-8 text-center border-b border-gray-100">
-          <div className="w-20 h-20 bg-green-100 rounded-full mx-auto mb-6 flex items-center justify-center">
-            <CheckCircle className="h-12 w-12 text-green-500" />
+      {/* max-h aur overflow-y-auto hata diya, padding kam ki */}
+      <div className="bg-white rounded-3xl shadow-2xl max-w-md w-full">
+        
+        {/* Header - Size kam kiya */}
+        <div className="p-5 text-center border-b border-gray-100">
+          <div className="w-14 h-14 bg-green-100 rounded-full mx-auto mb-3 flex items-center justify-center">
+            <CheckCircle className="h-8 w-8 text-green-500" />
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Login Successful!</h2>
-          <p className="text-gray-600">Your queue token has been generated</p>
+          <h2 className="text-xl font-bold text-gray-900 mb-1">Generated Successful!</h2>
+          <p className="text-sm text-gray-600">Your queue token has been generated</p>
         </div>
 
-        {/* Token Content */}
-        <div className="p-8 space-y-6">
+        {/* Token Content - Spacing kam ki */}
+        <div className="p-5 space-y-4">
           <div className="text-center">
             <div className="bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent">
-              <div className="text-4xl font-black tracking-wider mb-2">{tokenData.tokenNumber}</div>
+              {/* Token number font size kam kiya */}
+              <div className="text-3xl font-black tracking-wider mb-1">{tokenData.tokenNumber}</div>
             </div>
-            <div className="bg-white border-4 border-green-200 rounded-2xl p-6 shadow-lg">
-              <div className="flex items-center justify-center gap-3 mb-4">
-                <div className="text-lg font-semibold text-gray-900">Counter {tokenData.counter}</div>
+            {/* Box padding kam kiya */}
+            <div className="bg-white border-4 border-green-200 rounded-2xl p-4 shadow-lg">
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <div className="text-base font-semibold text-gray-900">Counter {tokenData.counter}</div>
               </div>
               <p className="text-sm text-gray-600">Phone: {tokenData.phone}</p>
               {tokenData.urgent && (
-                <div className="mt-3 p-2 bg-red-100 border border-red-200 rounded-xl">
-                  <span className="font-semibold text-red-800 text-sm">⚡ URGENT PRIORITY</span>
+                <div className="mt-2 p-1.5 bg-red-100 border border-red-200 rounded-xl">
+                  <span className="font-semibold text-red-800 text-xs">⚡ URGENT PRIORITY</span>
                 </div>
               )}
             </div>
           </div>
 
-          {/* Buttons */}
-          <div className="flex gap-3 pt-4">
+          {/* Buttons - Padding kam kiya */}
+          <div className="flex gap-3 pt-2">
             <button
               onClick={handlePrint}
-              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-6 rounded-2xl transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-2xl transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
             >
-              <Printer size={20} />
+              <Printer size={18} />
               Print Token
             </button>
             <button
               onClick={onClose}
-              className="p-4 bg-gray-100 hover:bg-gray-200 rounded-2xl transition-all duration-200 shadow-md hover:shadow-lg"
+              className="p-3 bg-gray-100 hover:bg-gray-200 rounded-2xl transition-all duration-200 shadow-md hover:shadow-lg"
             >
-              <X size={24} className="text-gray-600" />
+              <X size={20} className="text-gray-600" />
             </button>
           </div>
         </div>
