@@ -25,8 +25,7 @@ const Counters = () => {
   const [counters, setCounters] = useState(countersConfig.map(c => ({
     ...c, 
     currentServing: null, 
-    waiting: 0, 
-    urgentWaiting: 0 
+    hasTokens: false
   })));
   const { logout } = useAuth();
   const navigate = useNavigate();
@@ -37,8 +36,7 @@ const Counters = () => {
       setCounters(prev => prev.map(c => 
         c.id === counterId ? {
           ...c,
-          waiting: res.data.pendingCount,
-          urgentWaiting: res.data.urgentCount
+          hasTokens: res.data.pendingCount > 0
         } : c
       ));
     } catch (error) {
@@ -56,20 +54,19 @@ const Counters = () => {
             : c
         ));
       }
-      // Re-fetch status to update waiting count
+      // Re-fetch status
       await fetchStatus(counterId);
     } catch (error) {
       console.log('Next token error:', error);
     }
   };
 
-  // Initial load and polling
   useEffect(() => {
     countersConfig.forEach(config => fetchStatus(config.id));
 
     const interval = setInterval(() => {
       countersConfig.forEach(config => fetchStatus(config.id));
-    }, 3000); // Poll every 3 seconds
+    }, 3000);
 
     return () => clearInterval(interval);
   }, [fetchStatus]);
@@ -77,7 +74,7 @@ const Counters = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-indigo-100 p-4">
       {/* Navbar */}
-      <nav className="bg-white/80 backdrop-blur-xl shadow-lg sticky top-0 z-40 p-4 rounded-xl mb-4">
+      <nav className="bg-white/80 backdrop-blur-xl shadow-lg sticky top-0 z-40 p-4 rounded-xl mb-6">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <Link to="/dashboard" className="flex items-center gap-2 text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
             <Users size={24} />
@@ -95,78 +92,69 @@ const Counters = () => {
       </nav>
 
       {/* Header */}
-      <div className="text-center mb-6">
-        <ArrowLeft className="mx-auto h-8 w-8 text-gray-400 mb-2 cursor-pointer hover:text-gray-600" onClick={() => navigate('/dashboard')} />
-        <h1 className="text-3xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
+      <div className="text-center mb-8">
+        <ArrowLeft className="mx-auto h-8 w-8 text-gray-400 mb-3 cursor-pointer hover:text-gray-600 transition-colors" onClick={() => navigate('/dashboard')} />
+        <h1 className="text-3xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent mb-1">
           Live Counters
         </h1>
-        <p className="text-gray-600">Real-time queue management</p>
+        <p className="text-sm text-gray-600">Call next customer</p>
       </div>
 
       {/* Counters Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-6">
         {counters.map((counter) => {
           const Icon = counter.icon;
           return (
-            <div key={counter.id} className="bg-white/70 backdrop-blur-xl rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all border border-white/50">
-              {/* Header */}
-              <div className="flex items-center justify-between mb-4">
-                <div className={`p-3 rounded-xl bg-gradient-to-r ${counter.color}`}>
+            <div key={counter.id} className="bg-white/80 backdrop-blur-xl rounded-2xl shadow-xl hover:shadow-2xl transition-all border border-white/50 flex flex-col h-80 p-6">
+              {/* Header - Fixed */}
+              <div className="flex items-center justify-between mb-6">
+                <div className={`p-3 rounded-xl bg-gradient-to-r ${counter.color} shadow-lg`}>
                   <Icon className="h-6 w-6 text-white" />
                 </div>
                 <div className="text-lg font-bold text-gray-900">{counter.name}</div>
               </div>
 
-              {/* Purpose */}
-              <div className="mb-4">
+              {/* Purpose - Fixed */}
+              <div className="mb-8 flex-shrink-0">
                 <p className="text-xs font-semibold text-gray-600 uppercase tracking-wider mb-1">
                   {counter.purpose}
                 </p>
               </div>
 
-              {/* Current Serving */}
-              <div className="text-center py-4 mb-4">
+              {/* Content Area - Flex Fill */}
+              <div className="flex-1 flex flex-col justify-center items-center mb-8">
                 {counter.currentServing ? (
-                  <div className="bg-green-100 border-4 border-green-300 rounded-2xl p-4 mb-2">
-                    <div className="text-3xl font-black text-green-800 tracking-wide">
-                      {counter.currentServing}
+                  <>
+                    <div className="w-24 h-24 bg-green-100 rounded-2xl flex items-center justify-center mb-4 shadow-lg">
+                      <div className="text-2xl font-black text-green-700 tracking-wide">
+                        {counter.currentServing}
+                      </div>
                     </div>
-                  </div>
+                    <p className="text-sm font-semibold text-green-800 uppercase tracking-wide">Serving</p>
+                  </>
                 ) : (
-                  <div className="bg-gray-100 rounded-xl p-6 mb-2">
-                    <Clock className="mx-auto h-12 w-12 text-gray-400 mb-2" />
-                    <p className="text-gray-500 font-medium">Waiting for token</p>
-                  </div>
+                  <>
+                    <div className="w-20 h-20 bg-gray-100 rounded-xl flex items-center justify-center mb-4">
+                      <Clock className="h-8 w-8 text-gray-400" />
+                    </div>
+                    <p className="text-sm font-medium text-gray-500 uppercase tracking-wide">Ready</p>
+                  </>
                 )}
               </div>
 
-              {/* Waiting Badge */}
-              {(counter.waiting > 0) && (
-                <div className="flex gap-2 mb-4">
-                  <div className="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
-                    {counter.waiting} Waiting
-                    {counter.urgentWaiting > 0 && (
-                      <span className="bg-red-200 text-red-800 px-2 py-0.5 rounded-full text-xs font-bold">
-                        {counter.urgentWaiting}⚡
-                      </span>
-                    )}
-                  </div>
-                </div>
-              )}
-
-              {/* Next Button */}
-              <div className="pt-2">
+              {/* Button - Fixed Bottom with mt-auto */}
+              <div className="mt-auto pt-4">
                 <button
                   onClick={() => handleNext(counter.id)}
-                  disabled={counter.waiting === 0}
-                  className={`w-full py-3 px-4 rounded-xl font-bold text-sm shadow-lg transition-all flex items-center justify-center gap-2 ${
-                    counter.waiting === 0
+                  disabled={!counter.hasTokens}
+                  className={`w-full py-3 rounded-xl font-bold text-sm shadow-lg transition-all flex items-center justify-center gap-2 ${
+                    !counter.hasTokens
                       ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
-                      : 'bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white shadow-xl hover:shadow-2xl hover:-translate-y-0.5'
+                      : 'bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white hover:shadow-xl hover:-translate-y-0.5'
                   }`}
                 >
-                  <Play size={18} />
-                  {counter.waiting === 0 ? 'Queue Empty' : 'Call Next'}
+                  <Play size={16} className="group-hover:rotate-12 transition-transform" />
+                  {!counter.hasTokens ? 'No Tokens' : 'Call Next'}
                 </button>
               </div>
             </div>
