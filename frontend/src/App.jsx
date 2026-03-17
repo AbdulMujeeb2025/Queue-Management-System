@@ -5,6 +5,7 @@ import Login from './components/Auth/Login';
 import Signup from './components/Auth/Signup';
 import TokenForm from './components/Dashboard/TokenForm';
 import ProtectedRoute from './components/ProtectedRoute';
+import Counters from './components/Dashboard/Counters';
 import './index.css';
 
 function AppContent() {
@@ -20,6 +21,14 @@ function AppContent() {
               <TokenForm />
             </ProtectedRoute>
           } 
+        />
+        <Route 
+          path="/counters" 
+          element={
+            <ProtectedRoute>
+              <Counters />
+            </ProtectedRoute>
+          }
         />
         <Route path="/" element={<Navigate to="/login" replace />} />
       </Routes>

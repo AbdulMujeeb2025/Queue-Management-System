@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import api from '../../services/api';
 import { LogOut, Ticket, Phone, AlertCircle, CheckCircle, Printer, X } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
@@ -68,21 +68,25 @@ const TokenForm = () => {
       <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-blue-50 p-6">
         <div className="max-w-2xl mx-auto">
           {/* Header */}
-          <div className="flex justify-between items-center mb-8">
-            <div>
-              <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                Queue Management
+          <nav className="bg-white/80 backdrop-blur-xl shadow-lg rounded-2xl p-6 mb-8">
+            <div className="flex items-center justify-between">
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                Generate Token
               </h1>
-              <p className="text-gray-600 mt-1">Welcome, {user?.name}</p>
+              <div className="flex items-center gap-4">
+                <Link to="/counters" className="px-6 py-3 bg-gradient-to-r from-indigo-500 to-blue-600 text-white font-semibold rounded-xl hover:from-indigo-600 hover:to-blue-700 transition-all shadow-lg hover:shadow-xl">
+                  Counters Status
+                </Link>
+                <button
+                  onClick={logout}
+                  className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl"
+                >
+                  <LogOut size={20} />
+                  Logout
+                </button>
+              </div>
             </div>
-            <button
-              onClick={logout}
-              className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-xl font-medium transition-all shadow-lg"
-            >
-              <LogOut size={20} />
-              Logout
-            </button>
-          </div>
+          </nav>
 
           {/* Token Form */}
           <div className="bg-white/70 backdrop-blur-xl rounded-3xl shadow-2xl p-8 mb-8">
