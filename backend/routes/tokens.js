@@ -42,12 +42,64 @@ router.post('/generate', auth, async (req, res) => {
       urgent,
       tokenNumber,
       counter,
+      status: 'pending',
       userId: req.user._id,
     });
 
     await token.save();
 
     res.status(201).json(token);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// @route   GET api/tokens/counter/:counter/next
+// @desc    Get next pending token for counter (urgent first)
+router.get('/counter/:counter/next', auth, async (req, res) => {
+  try {
+    const counter = parseInt(req.params.counter);
+    
+    // Find next token: urgent first, then normal pending
+    let nextToken = await Token.findOne({
+      counter,
+      status: 'pending'
+    }).sort({
+      urgent: -1,  // urgent (true) first
+      createdAt: 1  // then earliest
+    });
+
+    if (!nextToken) {
+      return res.json({ message: 'No tokens waiting', token: null });
+    }
+
+    // Mark as called
+    nextToken.status = 'called';
+    await nextToken.save();
+
+    res.json({
+      token: nextToken,
+      waitingCount: await Token.countDocuments({ counter, status: 'pending' })
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// @route   GET api/tokens/counter/:counter/status
+// @desc    Get counter status (current serving, queue length)
+router.get('/counter/:counter/status', async (req, res) => {
+  try {
+    const counter = parseInt(req.params.counter);
+    const pendingCount = await Token.countDocuments({ counter, status: 'pending' });
+    const urgentCount = await Token.countDocuments({ counter, status: 'pending', urgent: true });
+    
+    res.json({
+      counter,
+      pendingCount,
+      urgentCount,
+      totalWaiting: pendingCount
+    });
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
   }
