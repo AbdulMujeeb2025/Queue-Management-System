@@ -47,7 +47,7 @@ const Counters = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-indigo-100">
-      {/* Navbar - Padding kam ki */}
+      {/* Navbar */}
       <nav className="bg-white/80 backdrop-blur-xl shadow-lg sticky top-0 z-40">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
           <Link to="/dashboard" className="flex items-center gap-2 text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
@@ -131,29 +131,6 @@ const Counters = () => {
               </div>
             );
           })}
-        </div>
-
-        {/* Legend */}
-        <div className="mt-20 text-center">
-          <h3 className="text-2xl font-bold text-gray-800 mb-6">How to Read Counter Status</h3>
-          <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-6 text-sm">
-            <div className="p-6 bg-white rounded-2xl shadow-lg">
-              <div className="text-3xl font-black text-blue-600 mb-2">ID-012</div>
-              <p>Your token number</p>
-            </div>
-            <div className="p-6 bg-white rounded-2xl shadow-lg">
-              <div className="text-3xl font-black text-green-600 mb-2">FIR-008</div>
-              <p>Counter showing this number = your turn!</p>
-            </div>
-            <div className="p-6 bg-white rounded-2xl shadow-lg">
-              <div className="text-3xl font-black text-orange-600 mb-2">FIR-005</div>
-              <p>Counter showing lower = wait please</p>
-            </div>
-            <div className="p-6 bg-white rounded-2xl shadow-lg">
-              <div className="bg-gradient-to-r from-emerald-500 to-green-600 text-white px-6 py-3 rounded-xl font-bold mb-2 inline-block">Proceed ➜</div>
-              <p>Go to counter now!</p>
-            </div>
-          </div>
         </div>
       </div>
     </div>
